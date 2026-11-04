@@ -1,0 +1,12 @@
+<h1>Odinbook Feed</h1>
+
+<% @posts.each do |post| %>
+  <article>
+    <p><strong><%= post.user.username %></strong></p>
+
+    <p><%= post.content %></p>
+
+    <%= link_to "View post", post_path(post) %>
+  </article>
+  <hr>
+<% end %>
