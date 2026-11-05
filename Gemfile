@@ -41,7 +41,7 @@ gem "thruster", require: false
 #
 # gem "image_processing", "~> 1.2"
 #
-gem "json", "~> 2.0"
+gem "json", "~> 3.1"
 
 gem "devise"
 
