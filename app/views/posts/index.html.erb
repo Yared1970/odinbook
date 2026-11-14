@@ -1,12 +1,25 @@
+
 <h1>Odinbook Feed</h1>
 
-<% @posts.each do |post| %>
-  <article>
-    <p><strong><%= post.user.username %></strong></p>
+<%= link_to "Create New Post", new_post_path %>
 
-    <p><%= post.content %></p>
+<% if @posts.any? %>
+  <% @posts.each do |post| %>
+    <article>
+      <p>
+        <%= link_to post.user.username,
+                    user_path(post.user) %>
+      </p>
 
-    <%= link_to "View post", post_path(post) %>
-  </article>
-  <hr>
+      <p><%= post.content %></p>
+
+      <%= link_to "View Post", post_path(post) %>
+    </article>
+    <hr>
+  <% end %>
+<% else %>
+  <p>
+    Your feed is empty. Follow other users to see
+    their posts here.
+  </p>
 <% end %>

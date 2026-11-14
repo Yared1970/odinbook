@@ -1,0 +1,33 @@
+
+<h1><%= @user.username %>'s Profile</h1>
+
+<p><%= @user.bio %></p>
+
+<p>
+  Followers: <%= @user.followers.count %>
+  Following: <%= @user.following.count %>
+</p>
+
+<% unless current_user == @user %>
+  <% if current_user.following.exists?(@user.id) %>
+    <%= button_to "Unfollow",
+                  user_follow_path(@user),
+                  method: :delete %>
+  <% else %>
+    <%= button_to "Follow",
+                  user_follow_path(@user),
+                  method: :post %>
+  <% end %>
+<% end %>
+
+<h2>Posts</h2>
+
+<% @posts.each do |post| %>
+  <article>
+    <p><%= post.content %></p>
+    <%= link_to "View Post", post_path(post) %>
+  </article>
+  <hr>
+<% end %>
+
+<%= link_to "Back to Feed", posts_path %>

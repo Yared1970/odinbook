@@ -1,6 +1,52 @@
 <h1>Post</h1>
 
-<p><strong><%= @post.user.username %></strong></p>
+<p>
+  <strong>
+    <%= link_to @post.user.username, user_path(@post.user) %>
+  </strong>
+</p>
 <p><%= @post.content %></p>
 
+
+<p>
+  Likes: <%= @post.likes.count %>
+</p>
+
+<% if @post.likes.exists?(user: current_user) %>
+  <%= button_to "Unlike",
+                post_like_path(@post),
+                method: :delete %>
+<% else %>
+  <%= button_to "Like",
+                post_like_path(@post),
+                method: :post %>
+<% end %>
+
+
 <%= link_to "Back to feed", posts_path %>
+
+
+<h2>Replies</h2>
+
+<% @post.replies.each do |reply| %>
+  <p>
+    <strong><%= reply.user.username %></strong>
+    <%= reply.content %>
+  </p>
+<% end %>
+
+<h3>Write a Reply</h3>
+
+<% if @reply.errors.any? %>
+  <ul>
+    <% @reply.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with url: post_replies_path(@post),
+              scope: :post do |form| %>
+  <%= form.text_area :content, rows: 3 %>
+  <%= form.submit "Reply" %>
+<% end %>
